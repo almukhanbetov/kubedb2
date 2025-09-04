@@ -1,14 +1,18 @@
 package main
+
 import (
 	"context"
 	"log"
 	"net/http"
 	"os"
+
 	"github.com/gin-gonic/gin"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/joho/godotenv"
 )
+
 var db *pgxpool.Pool
+
 func main() {
 	_ = godotenv.Load()
 	dsn := os.Getenv("DATABASE_URL")
@@ -22,6 +26,9 @@ func main() {
 	}
 	defer db.Close()
 	router := gin.Default()
+	router.GET("/", func(c *gin.Context) {
+		c.JSON(200, gin.H{"message": "hello from kubedb2"})
+	})
 	router.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"message": "pong"})
 	})

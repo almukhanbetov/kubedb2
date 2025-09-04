@@ -35,12 +35,18 @@ jobs:
 
       - name: Deploy to K3s
         run: |
+          # ✅ Создать namespace, если его нет
+          kubectl create namespace kubedb2 --dry-run=client -o yaml | kubectl apply -f -    
+
+      - name: Deploy to K3s
+        run: |
+          kubectl apply -f k3s/namespace.yaml
           kubectl apply -f k3s/clusterissuer.yaml
           kubectl apply -f k3s/secret.yaml
           kubectl apply -f k3s/deployment.yaml
           kubectl apply -f k3s/service.yaml
           kubectl apply -f k3s/ingress.yaml
-          
+
       - name: Verify rollout status
         run: |
           kubectl rollout status deployment/kubedb2 -n kubedb2    

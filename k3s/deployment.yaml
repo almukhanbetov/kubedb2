@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubedb2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kubedb2
+  template:
+    metadata:
+      labels:
+        app: kubedb2
+    spec:
+      containers:
+        - name: app
+          image: almuko/kubedb2:latest
+          ports:
+            - containerPort: 9003
+          env:
+            - name: PORT
+              value: "9003"                     
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: kubedb2-secret
+                  key: database-url

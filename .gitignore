@@ -1,0 +1,23 @@
+# Go build artifacts
+/app
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Go modules
+vendor/
+
+# IDE/editor
+.vscode/
+.idea/
+*.swp
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Env/config
+.env
